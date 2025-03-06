@@ -12,25 +12,25 @@ function createEmployeeCard(name, position) { // Function that adds employees by
     const positionPara = document.createElement("p"); // Positions the text
     positionPara.textContent = `Position: ${position}`;
 
-    const editButton = document.createElement("button"); // Task 5
-    editButton.textContent = "Edit";
-    editButton.setAttribute("class", "edit-btn");
+    const editButton = document.createElement("button"); // Task 5 - added the ability to edit the employees
+    editButton.textContent = "Edit"; // name of the button is Edit
+    editButton.setAttribute("class", "edit-btn"); // Attributes of the edit button
 
     const removeButton = document.createElement("button"); // Adds a remove button
     removeButton.textContent = "x"; // Adds "x" to delete employee
     removeButton.setAttribute("class", "remove-btn"); //gives the "x" the attribute to act like a remove button
 
     removeButton.addEventListener("click", function(event) { // Listens for the deleted employees - Task 4 adding stop propagation
-    event.stopPropagation();
-    if (container.contains(card)) {
+    event.stopPropagation(); // Stops the event from listening to the parent class
+    if (container.contains(card)) { // Allows the ability to remove employe
         container.removeChild(card);
-        console.log("Employee Card is Removed")
+        console.log("Employee Card is Removed") // Pops up as Employee Card is Removed
         }
     });
 
-    editButton.addEventListener("click", function(event) { // Task 5
-        event.stopPropagation();
-        enableEditing(card, nameHeading, positionPara, editButton);
+    editButton.addEventListener("click", function(event) { // Task 5 - Listens when the edit button is used
+        event.stopPropagation(); // Stops the event from listening to the parent class
+        enableEditing(card, nameHeading, positionPara, editButton); // Allows user to edit these attributes
     });
 
     card.appendChild(nameHeading); // Name
@@ -41,27 +41,27 @@ function createEmployeeCard(name, position) { // Function that adds employees by
     container.appendChild(card); 
     }
 // Task 5 - Inline editing for employee cards
-function enableEditing(card, nameHeading, positionPara, editButton) {
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.value = nameHeading.textContent;
+function enableEditing(card, nameHeading, positionPara, editButton) { // Function to enable editing
+    const nameInput = document.createElement("input"); // Allows the user to add names of the employee
+    nameInput.type = "text"; // Text
+    nameInput.value = nameHeading.textContent; // adds the name to the html
 
-    const positionInput = document.createElement("input");
-    positionInput.type = "text";
-    positionInput.value = positionPara.textContent.replace("Position: ", "");
+    const positionInput = document.createElement("input"); // Allows in line text editing
+    positionInput.type = "text"; // uses text type
+    positionInput.value = positionPara.textContent.replace("Position: ", ""); // replaces the old text with the new text
 
-    const saveButton = document.createElement("button");
+    const saveButton = document.createElement("button"); // Creates a save button called "save"
     saveButton.textContent = "Save";
 
-    saveButton.addEventListener("click", function(event) {
+    saveButton.addEventListener("click", function(event) { // listens for the save button
         event.stopPropagation();
-        nameHeading.textContent = nameInput.value;
-        positionPara.textContent = `Position: ${positionInput.value}`;
-        card.replaceChild(nameHeading, nameInput);
-        card.replaceChild(positionPara, positionInput);
-        card.replaceChild(editButton, saveButton);
+        nameHeading.textContent = nameInput.value; // Replaces the name of the employee
+        positionPara.textContent = `Position: ${positionInput.value}`; // updates the position value
+        card.replaceChild(nameHeading, nameInput); // Name input
+        card.replaceChild(positionPara, positionInput); // Position Input
+        card.replaceChild(editButton, saveButton); // Save button
     });
-
+    // zreplaces card with new data
     card.replaceChild(nameInput, nameHeading);
     card.replaceChild(positionInput, positionPara);
     card.replaceChild(saveButton, editButton);
@@ -74,29 +74,29 @@ document.addEventListener("DOMContentLoaded", function() { // Function to add th
 // Task 2 - End
 
 // Task 3 - Converting Nodelists to Arrays for Bulk Updates
-function highlightAllEmployees() {
-    const employeeCards = document.querySelectorAll(".employee-card");
-    const employeeArray = Array.from(employeeCards);
+function highlightAllEmployees() { // Highlights all employees
+    const employeeCards = document.querySelectorAll(".employee-card"); // Selects employees from employee card
+    const employeeArray = Array.from(employeeCards); // Array of employee cards
 
-    employeeArray.forEach(card => {
+    employeeArray.forEach(card => {  // Arrow fucntion that highlights all employees
         card.classList.add("highlight");
     });
 }
 
-function removeHighlightFromAllEmployees() {
-    const employeeCards = document.querySelectorAll(".employee-card");
-    const employeeArray = [...employeeCards];
+function removeHighlightFromAllEmployees() { // Removes highlight
+    const employeeCards = document.querySelectorAll(".employee-card"); // selects from tje employee card
+    const employeeArray = [...employeeCards]; // Expands the employee array
 
-    employeeArray.forEach(card => {
+    employeeArray.forEach(card => { // Arrow function to remove the highlight
         card.classList.remove("highlight");
     });
 }
 // Task 3 - End
 
 // Task 4 - Employee Card Removal With Event Bubbling
-const employeeContainer = document.getElementById("employeeContainer");
+const employeeContainer = document.getElementById("employeeContainer"); // Identifies the area that contains the employee
 
-employeeContainer.addEventListener("click", function(event) {
+employeeContainer.addEventListener("click", function(event) { // Listens to when the employee card is selected
     if (event.target.classList.contains("employee-card")) {
         console.log("Employee card clicked");
     }
