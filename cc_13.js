@@ -12,19 +12,59 @@ function createEmployeeCard(name, position) { // Function that adds employees by
     const positionPara = document.createElement("p"); // Positions the text
     positionPara.textContent = `Position: ${position}`;
 
+    const editButton = document.createElement("button"); // Task 5
+    editButton.textContent = "Edit";
+    editButton.setAttribute("class", "edit-btn");
+
     const removeButton = document.createElement("button"); // Adds a remove button
     removeButton.textContent = "x"; // Adds "x" to delete employee
     removeButton.setAttribute("class", "remove-btn"); //gives the "x" the attribute to act like a remove button
 
-    removeButton.addEventListener("click", function() { // Listens for the deleted employees
-        container.removeChild(card); // Puts it under the removed list
+    removeButton.addEventListener("click", function(event) { // Listens for the deleted employees - Task 4 adding stop propagation
+    event.stopPropagation();
+    if (container.contains(card)) {
+        container.removeChild(card);
+        console.log("Employee Card is Removed")
+        }
+    });
+
+    editButton.addEventListener("click", function(event) { // Task 5
+        event.stopPropagation();
+        enableEditing(card, nameHeading, positionPara, editButton);
     });
 
     card.appendChild(nameHeading); // Name
     card.appendChild(positionPara); // Position for the text
+    card.appendChild(editButton); // Task 5 - Edit button
     card.appendChild(removeButton); // Remove button
 
     container.appendChild(card); 
+    }
+// Task 5 - Inline editing for employee cards
+function enableEditing(card, nameHeading, positionPara, editButton) {
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.value = nameHeading.textContent;
+
+    const positionInput = document.createElement("input");
+    positionInput.type = "text";
+    positionInput.value = positionPara.textContent.replace("Position: ", "");
+
+    const saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+
+    saveButton.addEventListener("click", function(event) {
+        event.stopPropagation();
+        nameHeading.textContent = nameInput.value;
+        positionPara.textContent = `Position: ${positionInput.value}`;
+        card.replaceChild(nameHeading, nameInput);
+        card.replaceChild(positionPara, positionInput);
+        card.replaceChild(editButton, saveButton);
+    });
+
+    card.replaceChild(nameInput, nameHeading);
+    card.replaceChild(positionInput, positionPara);
+    card.replaceChild(saveButton, editButton);
 }
 
 document.addEventListener("DOMContentLoaded", function() { // Function to add the new employees
@@ -54,9 +94,11 @@ function removeHighlightFromAllEmployees() {
 // Task 3 - End
 
 // Task 4 - Employee Card Removal With Event Bubbling
-document.getElementById("employeeContainer").addEventListener("click", function(event) {
+const employeeContainer = document.getElementById("employeeContainer");
+
+employeeContainer.addEventListener("click", function(event) {
     if (event.target.classList.contains("employee-card")) {
-        console.log("Employee Card is Clicked!");
+        console.log("Employee card clicked");
     }
 });
 // Task 4 - End
