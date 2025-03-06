@@ -53,3 +53,10 @@ function removeHighlightFromAllEmployees() {
 }
 // Task 3 - End
 
+// Task 4 - Employee Card Removal With Event Bubbling
+document.getElementById("employeeContainer").addEventListener("click", function(event) {
+    if (event.target.classList.contains("employee-card")) {
+        console.log("Employee Card is Clicked!");
+    }
+});
+// Task 4 - End
