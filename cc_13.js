@@ -32,3 +32,24 @@ document.addEventListener("DOMContentLoaded", function() { // Function to add th
     createEmployeeCard("Jane Smith", "Project Manager"); // Employee #2
 });
 // Task 2 - End
+
+// Task 3 - Converting Nodelists to Arrays for Bulk Updates
+function highlightAllEmployees() {
+    const employeeCards = document.querySelectorAll(".employee-card");
+    const employeeArray = Array.from(employeeCards);
+
+    employeeArray.forEach(card => {
+        card.classList.add("highlight");
+    });
+}
+
+function removeHighlightFromAllEmployees() {
+    const employeeCards = document.querySelectorAll(".employee-card");
+    const employeeArray = [...employeeCards];
+
+    employeeArray.forEach(card => {
+        card.classList.remove("highlight");
+    });
+}
+// Task 3 - End
+
